@@ -152,3 +152,31 @@ paths:
                   fileurl:
                     type: string
                     example: https://api-demo.lms.edu/files/certificates/C-2025-01.pdf
+  /certificate/{certificateId}/download:
+    get:
+      summary: Download Certificate PDF
+      description: Sertifikatı PDF formatında birbaşa yükləmək üçün API.
+      parameters:
+        - in: path
+          name: certificateId
+          required: true
+          schema:
+            type: string
+            example: C-2025-01
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            example: Bearer test_token_123
+      responses:
+        "200":
+          description: Sertifikat PDF faylı uğurla qaytarıldı.
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Sertifikat tapılmadı.
+        "401":
+          description: İcazə yoxdur (Authorization xətası).
