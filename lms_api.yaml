@@ -1,0 +1,154 @@
+openapi: 3.0.0
+info:
+  title: LMS API Collection
+  version: 1.0.0
+  description: >
+    Bu Swagger sənədi LMS (Learning Management System) üçün hazırlanmış API-lərin
+    texniki təsvirini təqdim edir. API-lər Postman Mock Server üzərindən işləyir.
+
+servers:
+  - url: https://fdef39f5-048f-4377-aeb3-9f04de18d6d5.mock.pstmn.io/api/v1
+    description: Postman Mock Server (Testing Environment)
+
+paths:
+  /assignments:
+    get:
+      summary: Get Assignments List
+      description: Tələbələrin tapşırıq siyahısını qaytaran API.
+      parameters:
+        - in: header
+          name: Content-Type
+          schema:
+            type: string
+            example: application/json
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            example: Bearer test_token_123
+      responses:
+        "200":
+          description: Tapşırıq siyahısı uğurla qaytarıldı.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assignments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        assignmentId:
+                          type: string
+                          example: A001
+                        title:
+                          type: string
+                          example: Python Assignment
+                        instructor:
+                          type: string
+                          example: Abdul Hannan Zinnat
+                        startDate:
+                          type: string
+                          example: 2023-08-13
+                        deadline:
+                          type: string
+                          example: 2023-11-12
+                        marks:
+                          type: string
+                          example: "95"
+                        status:
+                          type: string
+                          example: Graded
+
+  /certificates:
+    get:
+      summary: Get Certificates List
+      description: Tələbənin əldə etdiyi sertifikatların siyahısını qaytaran API.
+      parameters:
+        - in: header
+          name: Content-Type
+          schema:
+            type: string
+            example: application/json
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            example: Bearer test_token_123
+      responses:
+        "200":
+          description: Sertifikat siyahısı uğurla qaytarıldı.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  certificates:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        certificateId:
+                          type: string
+                          example: C-2025-01
+                        courseName:
+                          type: string
+                          example: Mathematics with Animated Lessons
+                        issuedDate:
+                          type: string
+                          example: 2025-11-06
+                        status:
+                          type: string
+                          example: Available
+                        completion:
+                          type: string
+                          example: "100%"
+                        downloadLink:
+                          type: string
+                          example: https://api-demo.lms.edu/files/certificates/C-2025-01.pdf
+
+  /certificate/{certificateId}:
+    get:
+      summary: Get Certificate by ID
+      description: Sertifikatı ID ilə PDF formatında yükləmək üçün API.
+      parameters:
+        - in: path
+          name: certificateId
+          required: true
+          schema:
+            type: string
+            example: C-2025-01
+        - in: header
+          name: Content-Type
+          schema:
+            type: string
+            example: application/json
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            example: Bearer test_token_123
+      responses:
+        "200":
+          description: Sertifikat PDF linki qaytarılır.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  certificateId:
+                    type: string
+                    example: C-2025-01
+                  courseName:
+                    type: string
+                    example: Mathematics with Animated Lessons
+                  issuedDate:
+                    type: string
+                    example: 2025-11-06
+                  filetype:
+                    type: string
+                    example: pdf
+                  fileurl:
+                    type: string
+                    example: https://api-demo.lms.edu/files/certificates/C-2025-01.pdf
